@@ -1,13 +1,8 @@
-name: pylint
-
+name: Build
 on:
   push:
     branches:
-      - master
-      - develop
-      - release/*
-      - feature/*
-      - hotfix/*
+      - main
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
