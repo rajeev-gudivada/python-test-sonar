@@ -3,13 +3,14 @@ on:
   push:
     branches:
       - main
+      - feature/*
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/feature'
     steps:
     - uses: actions/checkout@v2
       with:
