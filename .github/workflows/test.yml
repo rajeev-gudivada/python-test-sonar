@@ -28,8 +28,8 @@ jobs:
   test: 
     needs: build
     runs-on: ubuntu-latest
-    #container: 
-    #    image: ${{env.BASE_IMAGE_NAME}}
+    container: 
+        image: ${{needs.build.outputs.output1}}
     steps:
       - run: echo ${{needs.build.outputs.output1}}
         
