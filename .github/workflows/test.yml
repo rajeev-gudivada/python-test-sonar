@@ -25,9 +25,10 @@ jobs:
       with:
         python-version: 3.9
   test: 
+    needs: build
     runs-on: ubuntu-latest
     container: 
-        image: $BASE_IMAGE_NAME
+        image: ${{env.BASE_IMAGE_NAME}}
     steps:
     - uses: actions/checkout@v2
       with:
