@@ -14,7 +14,8 @@ jobs:
         fetch-depth: 100
     - name: Sets env vars for base image
       run: |
-          echo "BASE_IMAGE_NAME=$(cat Dockerfile | head -n 1 | awk -F" " '{print $2}')" >> $GITHUB_ENV
+          set -x
+          echo "BASE_IMAGE_NAME=$(cat deploy/Dockerfile | head -n 1 | awk -F" " '{print $2}')" >> $GITHUB_ENV
           echo ${{env.BASE_IMAGE_NAME}}
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
