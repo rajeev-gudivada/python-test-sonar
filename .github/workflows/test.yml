@@ -14,7 +14,7 @@ jobs:
       with:
         fetch-depth: 100
     - name: Sets env vars for base image
-      id: step-1
+      id: step1
       run: |
           set -x
           echo "base=$(cat deploy/Dockerfile | head -n 1 | awk -F" " '{print $2}')" >> $GITHUB_OUTPUT
