@@ -7,16 +7,17 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    outputs:
+      output1: ${{ steps.step1.outputs.base }}
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 100
     - name: Sets env vars for base image
+      id: step-1
       run: |
           set -x
-          echo "BASE_IMAGE_NAME=$(cat deploy/Dockerfile | head -n 1 | awk -F" " '{print $2}')" >> $GITHUB_ENV
-          echo ${{env.BASE_IMAGE_NAME}}
+          echo "base=$(cat deploy/Dockerfile | head -n 1 | awk -F" " '{print $2}')" >> $GITHUB_OUTPUT
     - name: Test
       run: echo $BASE_IMAGE_NAME
       
@@ -27,13 +28,9 @@ jobs:
   test: 
     needs: build
     runs-on: ubuntu-latest
-    container: 
-        image: ${{env.BASE_IMAGE_NAME}}
+    #container: 
+    #    image: ${{env.BASE_IMAGE_NAME}}
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 100
-    - name: Test2
-      run: echo $BASE_IMAGE_NAME
+      - run: echo ${{needs.build.outputs.output1}}
         
 
