@@ -13,7 +13,10 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 100
-
+    - name: Sets env vars for base image
+      run: |
+          echo "BASE_IMAGE_NAME=cat Dockerfile | head -n 1 | awk -F" " '{print $2}'" >> $GITHUB_ENV
+          echo $GITHUB_ENV
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
