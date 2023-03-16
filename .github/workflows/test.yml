@@ -19,8 +19,20 @@ jobs:
           echo ${{env.BASE_IMAGE_NAME}}
     - name: Test
       run: echo $BASE_IMAGE_NAME
+      
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
         python-version: 3.9
+  test: 
+    runs-on: ubuntu-latest
+    container: 
+        image: $BASE_IMAGE_NAME
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 100
+    - name: Test2
+      run: echo $BASE_IMAGE_NAME
+        
 
