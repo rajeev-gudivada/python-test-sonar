@@ -7,6 +7,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    environment:
+      name: dev
     outputs:
       output1: ${{ steps.step1.outputs.base }}
     steps:
