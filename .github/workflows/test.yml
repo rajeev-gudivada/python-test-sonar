@@ -15,7 +15,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
        name: my-artifact
-       path: deploy/**
+       path: deploy/
     - name: Sets env vars for base image
       id: step1
       run: |
