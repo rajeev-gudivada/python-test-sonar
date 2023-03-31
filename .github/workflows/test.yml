@@ -18,6 +18,11 @@ jobs:
       with:
        name: my-artifact
        path: deploy/
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$GITHUB_CONTEXT"
     - name: Print paths filter variable
       run: echo "${{ github.event.inputs.path }}"
     - name: Get path of changed files
