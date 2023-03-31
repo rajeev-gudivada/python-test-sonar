@@ -29,18 +29,21 @@ jobs:
       run: echo "${{ github.event.inputs.path }}"
     - name: Get path of changed files
       id: path
-      run: echo "path=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | cut -d'/' -f 1,2)"  >> $GITHUB_OUTPUT
+      run: |
+        echo "path=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | cut -d'/' -f 1,2)"  >> $GITHUB_OUTPUT
+        echo "base=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | cut -d'/' -f 2)"  >> $GITHUB_OUTPUT
     - name: Do something with the path
       run: |
        echo "Changed files path: ${{ steps.path.outputs.path }}"
+       echo "imageRepository=catexpert-${{ steps.path.outputs.path }}" >> $GITHUB_ENV
     - name: Set environment variables based on path
       run: |
           if [ "${{ steps.path.outputs.path }}" = "docker/fastapi-auth" ]; then
             echo "Setting environment for fastapi-auth"
-            echo "imageRepository=catexpert-fastapi-auth" >> $GITHUB_ENV
+            #echo "imageRepository=catexpert-fastapi-auth" >> $GITHUB_ENV
           elif [ "${{ steps.path.outputs.path }}" = "docker/fastapi-celery" ]; then
             echo "Setting environment for fastapi-celery"
-            echo "imageRepository=catexpert-fastapi-celery" >> $GITHUB_ENV
+            #echo "imageRepository=catexpert-fastapi-celery" >> $GITHUB_ENV
           else
             echo "Setting environment variable FOO to 'not main'"
             echo "FOO=not main" >> $GITHUB_ENV
