@@ -5,6 +5,8 @@ on:
       - main
     paths:
     - 'deploy/test/upload/**'
+    - 'docker/fastapi-auth'
+    - 'docker/fastapi-celery'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -33,16 +35,18 @@ jobs:
        echo "Changed files path: ${{ steps.path.outputs.path }}"
     - name: Set environment variables based on path
       run: |
-          if [ "${{ steps.path.outputs.path }}" = "refs/heads/main" ]; then
-            echo "Setting environment variable FOO to 'main'"
-            echo "FOO=main" >> $GITHUB_ENV
-          elif [ "${{ steps.path.outputs.path }}" = "refs/heads/main" ]; then
-            echo "Setting environment variable FOO to 'main'"
-            echo "FOO=main" >> $GITHUB_ENV
+          if [ "${{ steps.path.outputs.path }}" = "docker/fastapi-auth" ]; then
+            echo "Setting environment for fastapi-auth"
+            echo "imageRepository=catexpert-fastapi-auth" >> $GITHUB_ENV
+          elif [ "${{ steps.path.outputs.path }}" = "docker/fastapi-celery" ]; then
+            echo "Setting environment for fastapi-celery"
+            echo "imageRepository=catexpert-fastapi-celery" >> $GITHUB_ENV
           else
             echo "Setting environment variable FOO to 'not main'"
             echo "FOO=not main" >> $GITHUB_ENV
           fi
+    - name: Print paths env variable
+      run: echo "${{ env.imageRepository }}"
     - name: Sets env vars for base image
       id: step1
       run: |
