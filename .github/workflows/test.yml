@@ -13,13 +13,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        fetch-depth: 100
+        fetch-depth: 0
     - uses: actions/upload-artifact@v3
       with:
        name: my-artifact
        path: deploy/
     - name: Print paths filter variable
       run: echo "${{ github.event.inputs.path }}"
+    - name: Get path of changed files
+      id: path
+      run: echo "::set-output name=path::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"
+    - name: Do something with the path
+      run: |
+       echo "Changed files path: ${{ steps.path.outputs.path }}"
     - name: Sets env vars for base image
       id: step1
       run: |
