@@ -5,8 +5,8 @@ on:
       - main
     paths:
     - 'deploy/test/upload/**'
-    - 'docker/fastapi-auth'
-    - 'docker/fastapi-celery'
+    - 'docker/fastapi-auth/'
+    - 'docker/fastapi-celery/'
 jobs:
   build:
     runs-on: ubuntu-latest
