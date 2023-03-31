@@ -27,10 +27,22 @@ jobs:
       run: echo "${{ github.event.inputs.path }}"
     - name: Get path of changed files
       id: path
-      run: echo "path=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"  >> $GITHUB_OUTPUT
+      run: echo "path=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | cut -d'/' -f 1,2)"  >> $GITHUB_OUTPUT
     - name: Do something with the path
       run: |
        echo "Changed files path: ${{ steps.path.outputs.path }}"
+    - name: Set environment variables based on path
+      run: |
+          if [ "${{ steps.path.outputs.path }}" = "refs/heads/main" ]; then
+            echo "Setting environment variable FOO to 'main'"
+            echo "FOO=main" >> $GITHUB_ENV
+          elif [ "${{ steps.path.outputs.path }}" = "refs/heads/main" ]; then
+            echo "Setting environment variable FOO to 'main'"
+            echo "FOO=main" >> $GITHUB_ENV
+          else
+            echo "Setting environment variable FOO to 'not main'"
+            echo "FOO=not main" >> $GITHUB_ENV
+          fi
     - name: Sets env vars for base image
       id: step1
       run: |
