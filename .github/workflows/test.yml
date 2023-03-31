@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+    - deploy/
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,6 +18,8 @@ jobs:
       with:
        name: my-artifact
        path: deploy/
+    - name: Print paths filter variable
+      run: echo "Paths filter: ${{ toJson(github.event.paths) }}"
     - name: Sets env vars for base image
       id: step1
       run: |
