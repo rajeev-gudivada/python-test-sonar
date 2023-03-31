@@ -27,7 +27,7 @@ jobs:
       run: echo "${{ github.event.inputs.path }}"
     - name: Get path of changed files
       id: path
-      run: echo "{path}=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"  >> $GITHUB_OUTPUT
+      run: echo "path=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})"  >> $GITHUB_OUTPUT
     - name: Do something with the path
       run: |
        echo "Changed files path: ${{ steps.path.outputs.path }}"
