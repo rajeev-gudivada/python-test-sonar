@@ -19,7 +19,7 @@ jobs:
        name: my-artifact
        path: deploy/
     - name: Print paths filter variable
-      run: echo "${{ github.event }}"
+      run: echo "${{ github.event.inputs.path }}"
     - name: Sets env vars for base image
       id: step1
       run: |
