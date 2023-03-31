@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-    - deploy/
+    - deploy/test/upload/
 jobs:
   build:
     runs-on: ubuntu-latest
