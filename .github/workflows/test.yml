@@ -3,10 +3,11 @@ on:
   push:
     branches:
       - main
+      - feature/**
     paths:
     - 'deploy/test/upload/**'
     - 'docker/fastapi-auth/**'
-    - docker/fastapi-celery
+    - 'docker/fastapi-celery/**'
 jobs:
   build:
     runs-on: ubuntu-latest
