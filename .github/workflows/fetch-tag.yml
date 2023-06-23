@@ -1,19 +1,21 @@
-name: Fetch Previous Tag
+name: Fetch Second-to-Last Tag
 
 on:
   workflow_dispatch:
   push:
     branches:
      - main
-
 jobs:
-  fetch_previous_tag:
+  fetch_second_last_tag:
     runs-on: ubuntu-latest
     steps:
-      - name: Get tag name
-        id: get_tag_name
-        run: echo "::set-output name=version::${GITHUB_REF/refs\/tags\//}"
+      - name: Fetch Git Tags
+        id: fetch_tags
+        run: |
+          git fetch --depth=1 --tags
+          tags=$(git rev-list --tags --max-count=2)
+          second_last_tag=$(echo "$tags" | sed -n '2p')
+          echo "::set-output name=second_last_tag::$second_last_tag"
       
-      - name: Echo tag value
-        run: echo "Tag value is ${{ steps.get_tag_name.outputs.version }}"
-
+      - name: Echo Second-to-Last Tag
+        run: echo "Second-to-last tag is ${{ steps.fetch_tags.outputs.second_last_tag }}"
