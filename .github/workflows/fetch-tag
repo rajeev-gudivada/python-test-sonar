@@ -1,0 +1,16 @@
+name: Fetch Previous Tag
+
+on:
+  workflow_dispatch
+
+jobs:
+  fetch_previous_tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get tag name
+        id: get_tag_name
+        run: echo "::set-output name=version::${GITHUB_REF/refs\/tags\//}"
+      
+      - name: Echo tag value
+        run: echo "Tag value is ${{ needs.get_tag_name.outputs.version }}"
+        needs: get_tag_name
