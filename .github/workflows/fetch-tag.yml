@@ -1,7 +1,10 @@
 name: Fetch Previous Tag
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+  push:
+    branches:
+     - main
 
 jobs:
   fetch_previous_tag:
