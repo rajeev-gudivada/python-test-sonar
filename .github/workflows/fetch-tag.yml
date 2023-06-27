@@ -1,46 +1,17 @@
-name: Fetch Second-to-Last Tag
+name: Release rollback
 
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
-        type: choice
-        options:
-          - info
-          - warning
-          - debug
-      print_tags:
-        description: 'True to print to STDOUT'
-        required: true
-        type: boolean
-      tags:
-        description: 'Test scenario tags'
+      release_tag:
+        description: 'Release tag id to build and deploy in prod'
         required: true
         type: string
-      environment:
-        description: 'Environment to run tests against'
-        type: environment
-        required: true
 jobs:
-  fetch_second_last_tag:
+  release_rollback_build:
     runs-on: ubuntu-latest
+    if:  ${{ inputs.release_tag }} 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Fetch Git Tags
-        id: fetch_tags
-        run: |
-          git fetch --depth=1 --tags
-          tags=$(git rev-list --tags --max-count=2)
-          second_last_tag=$(echo "$tags" | sed -n '2p')
-          echo "::set-output name=second_last_tag::$second_last_tag"
-      
-      - name: Echo Second-to-Last Tag
-        run: echo "Second-to-last tag is ${{ steps.fetch_tags.outputs.second_last_tag }}"
-      - name: Checkout Tag
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ steps.fetch_tags.outputs.second_last_tag }}
+      - name: Print the release tag to STDOUT
+        run: echo  The release tag is ${{ inputs.release_tag }} 
+ 
