@@ -14,4 +14,8 @@ jobs:
     steps:
       - name: Print the release tag to STDOUT
         run: echo  The release tag is ${{ inputs.release_tag }} 
+      - name: Checkout Tag
+        uses: actions/checkout@v2
+        with:
+          ref: tags/${{ inputs.release_tag }} 
  
