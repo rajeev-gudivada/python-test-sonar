@@ -17,6 +17,6 @@ jobs:
       - name: Checkout Tag
         uses: actions/checkout@v2
         with:
-          ref: tags/${{ inputs.release_tag }} 
+          ref: ${{ inputs.release_tag }} 
           fetch-depth: '0'
  
