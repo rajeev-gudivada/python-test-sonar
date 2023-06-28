@@ -1,0 +1,27 @@
+name: Tag Dropdown Example
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get Tags
+        id: get_tags
+        run: |
+          git fetch --tags
+          tags=$(git tag -l)
+          echo "::set-output name=tags::$tags"
+
+      - name: Display Tag Dropdown
+        id: tag_input
+        run: |
+          echo "::set-output name=tag::$INPUT_TAG"
+
+
+
