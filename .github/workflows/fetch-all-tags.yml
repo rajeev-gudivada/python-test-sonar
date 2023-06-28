@@ -1,7 +1,12 @@
-name: Tag Dropdown Example
+name: Workflow on Tag
 
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag'
+        required: true
+        default: 'v1.0'
 
 jobs:
   build:
@@ -11,17 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Get Tags
-        id: get_tags
+      - name: Build based on Tag
         run: |
-          git fetch --tags
-          tags=$(git tag -l)
-          echo "::set-output name=tags::$tags"
-
-      - name: Display Tag Dropdown
-        id: tag_input
-        run: |
-          echo "::set-output name=tag::$INPUT_TAG"
-
-
+          echo ${{ github.event.inputs.tag }}
 
