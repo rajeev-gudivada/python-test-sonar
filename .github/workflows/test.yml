@@ -1,12 +1,10 @@
 name: Test
 on:
-  push:
-    branches:
-      - main
-    paths:
-    - 'deploy/test/upload/**'
-    - 'docker/fastapi-auth/**'
-    - docker/fastapi-celery
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '*/5 * * * *'
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
